@@ -52,4 +52,27 @@ router.post('/login', (req, res, next) => {
     }
 });
 
+router.post('/signup', async (req, res, next) => {
+  const email = req.body.email
+  const username = req.body.username
+  const existingEmail = await User.findOne({ where: { email } })
+  const existingUsername = await User.findOne({ where: { username } })
+  if (existingEmail) {
+    res.status(409).send('Email is already registered')
+  }
+  else if (existingUsername) {
+    response.status(409).send('Username is already taken')
+  } else {
+    User.create({ ...req.body, password: bcrypt.hashSync(req.body.password, 10) })
+      .then(user => {
+        if (user) {
+          res.status(200).send('User created')
+        } else {
+          res.send(400).send('Failed to create user')
+        }
+      })
+      .catch(next)
+  }
+})
+
 module.exports = router

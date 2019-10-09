@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { toJWT, toData } = require('../auth/jwt');
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
+const { io } = require('../server');
 
 const router = new Router()
 
@@ -66,6 +67,7 @@ router.post('/signup', async (req, res, next) => {
     User.create({ ...req.body, password: bcrypt.hashSync(req.body.password, 10) })
       .then(user => {
         if (user) {
+            io.emit('newUser', user)
           res.status(200).send('User created')
         } else {
           res.send(400).send('Failed to create user')

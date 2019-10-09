@@ -24,3 +24,6 @@ db.sync({ force: true })
 // Routes
 const authRouter = require('./routers/authRouter');
 app.use(authRouter);
+
+// Lobby
+const lobby = require('./lobby');

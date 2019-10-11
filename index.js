@@ -19,6 +19,11 @@ db.sync({ force: true })
       username: "Lazlo",
       password: bcrypt.hashSync("123456", 10)
     })
+    await User.create({
+      email: "test2@test.com",
+      username: "Thomas",
+      password: bcrypt.hashSync("123456", 10)
+    })
     await Lobby.create({
       name: 'DevRoom',
       members: 0
@@ -31,3 +36,6 @@ const authRouter = require('./routers/authRouter');
 const lobbyRouter = require('./routers/lobbyRouter')
 app.use(authRouter);
 app.use(lobbyRouter);
+
+// Game
+const game = require('./game');

@@ -12,7 +12,7 @@ const db = require('./db');
 const bcrypt = require('bcrypt');
 const User = require('./models/userModel');
 const Lobby = require('./models/lobbyModel');
-db.sync({ force: true })
+db.sync()
   .then(async () => {
     await User.create({
       email: "test@test.com",
